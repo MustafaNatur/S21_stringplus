@@ -10,7 +10,7 @@ GLFLAGS=--coverage
 GCOVFLAGS=-fprofile-arcs -ftest-coverage
 sourceFilesArray=$(ls sourceFiles)
 
-all: build_object_files build_library test start_tests gen_html clean
+all: build_object_files build_library testmemcpy testmemmove testmemcmp teststrpbrk start_tests gen_html clean
 
 build_object_files:
 	$(CC) $(FLAGS) $(GCOVFLAGS) $(GLFLAGS) -c $(FUNC_FILES_C) 
@@ -18,11 +18,23 @@ build_object_files:
 build_library:
 	ar rcs $(LIBNAME) $(FUNC_FILES_O)
 
-test: 
-	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_test_memchr.c -L. s21_string.a  -o s21_test_memchr
+testmemcpy:
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_test_memcpy.c -L. s21_string.a  -o s21_test_memcpy
+	
+testmemmove:
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_test_memmove.c -L. s21_string.a  -o s21_test_memmove
+	
+testmemcmp:
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_test_memcmp.c -L. s21_string.a  -o s21_test_memcmp
+	
+teststrpbrk:
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_test_strpbrk.c -L. s21_string.a  -o s21_test_strpbrk
 	
 start_tests:
-	./s21_test_memchr
+	./s21_test_memcpy
+	./s21_test_memmove
+	./s21_test_memcmp
+	./s21_test_strpbrk
 
 gcov_report:
 	lcov -o tests.info -c -d .  
@@ -37,4 +49,4 @@ clean:
 
 rebuild:
 	make clean
-	make
+	make	
