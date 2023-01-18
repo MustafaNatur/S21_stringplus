@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef unsigned int s21_size_t;
+#define s21_NULL ((void *)0)
+
+// http://microsin.net/programming/arm/void-type-in-c-language.html гайд про
+// void * https://pvs-studio.com/ru/blog/terms/0088/ про терминирующий 0
+// http://natalia.appmat.ru/c&c++/lezione5.php обо всем по чуть-чуть
+
 void *memchr(const void *str, int c, size_t n);
 int memcmp(const void *str1, const void *str2, size_t n);
 void *memcpy(void *dest, const void *src, size_t n);
