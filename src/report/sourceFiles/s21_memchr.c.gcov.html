@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-01-18 15:04:37</td>
+            <td class="headerValue">2023-01-18 20:36:23</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -62,16 +62,16 @@
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>            : #include &quot;s21_string.h&quot;</a>
 <a name="2"><span class="lineNum">       2 </span>            : </a>
-<a name="3"><span class="lineNum">       3 </span><span class="lineCov">          6 : void *s21_memchr(const void *str, int c, s21_size_t n) {</span></a>
-<a name="4"><span class="lineNum">       4 </span><span class="lineCov">          6 :   void *ans = s21_NULL;</span></a>
-<a name="5"><span class="lineNum">       5 </span><span class="lineCov">         33 :   while (n &gt; 0) {</span></a>
-<a name="6"><span class="lineNum">       6 </span><span class="lineCov">         27 :     if (*(char *)str == c) {</span></a>
-<a name="7"><span class="lineNum">       7 </span><span class="lineCov">          5 :       ans = (void *)str;</span></a>
-<a name="8"><span class="lineNum">       8 </span>            :     }</a>
-<a name="9"><span class="lineNum">       9 </span><span class="lineCov">         27 :     str++;</span></a>
-<a name="10"><span class="lineNum">      10 </span><span class="lineCov">         27 :     n--;</span></a>
+<a name="3"><span class="lineNum">       3 </span><span class="lineCov">         17 : void *s21_memchr(const void *str, int c, s21_size_t n) {</span></a>
+<a name="4"><span class="lineNum">       4 </span><span class="lineCov">         17 :   void *ans = s21_NULL;</span></a>
+<a name="5"><span class="lineNum">       5 </span><span class="lineCov">         51 :   while (n--) {</span></a>
+<a name="6"><span class="lineNum">       6 </span><span class="lineCov">         49 :     if (*(char *)str == c) {</span></a>
+<a name="7"><span class="lineNum">       7 </span><span class="lineCov">         15 :       ans = (void *)str;</span></a>
+<a name="8"><span class="lineNum">       8 </span><span class="lineCov">         15 :       break;</span></a>
+<a name="9"><span class="lineNum">       9 </span>            :     }</a>
+<a name="10"><span class="lineNum">      10 </span><span class="lineCov">         34 :     str++;</span></a>
 <a name="11"><span class="lineNum">      11 </span>            :   }</a>
-<a name="12"><span class="lineNum">      12 </span><span class="lineCov">          6 :   return ans;</span></a>
+<a name="12"><span class="lineNum">      12 </span><span class="lineCov">         17 :   return ans;</span></a>
 <a name="13"><span class="lineNum">      13 </span>            : }</a>
 </pre>
       </td>

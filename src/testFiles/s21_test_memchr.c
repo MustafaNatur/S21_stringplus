@@ -1,21 +1,26 @@
+#include "s21_string.h"
 #include <check.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "s21_string.h"
-
 START_TEST(test_s21_string_memchr_usual) {
-  int size = 5;
-  char str[5] = "abcd";
-  for (int i = 0; i < size; i++) {
-    ck_assert_pstr_eq(memchr(str, str[i], 5), s21_memchr(str, str[i], 5));
+  char str[] = "abcccdddaaabcd";
+  for (int i = 0; i < strlen(str); i++) {
+    ck_assert_pstr_eq(memchr(str, str[i], strlen(str)),
+                      s21_memchr(str, str[i], strlen(str)));
   }
 }
 END_TEST
 
-START_TEST(test_s21_string_memchr_unusual){ck_assert_ptr_null(s21_memchr("abcd", 'c', 2));} END_TEST
+START_TEST(test_s21_string_memchr_unusual) {
+  ck_assert_ptr_null(s21_memchr("abcd", 'c', 2));
+  ck_assert_pstr_eq(s21_memchr("\0", '\0', 2), memchr("\0", '\0', 2));
+  ck_assert_ptr_null(s21_memchr("", 'c', 2));
+}
+END_TEST
 
-    Suite *s21_math_pow_suite() {
+Suite *s21_math_pow_suite() {
   Suite *s;
   TCase *tc_memchr_usual, *tc_memchr_unusual;
 
