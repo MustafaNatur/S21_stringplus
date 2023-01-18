@@ -5,12 +5,9 @@
 #include "../s21_string.h"
 
 START_TEST(test_s21_string_memset_normal) {
-  int size = 5;
   char str[30] = "Hello world! Hello School 21!";
   int ch = '$';
-  for (int i = 0; i < size; i++) {
-    ck_assert_pstr_eq(memset(str, ch, 5), s21_memset(str, ch, 5));
-  }
+  ck_assert_pstr_eq(memset(str, ch, 5), s21_memset(str, ch, 5));
 }
 END_TEST
 

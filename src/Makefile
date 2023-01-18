@@ -20,9 +20,11 @@ build_library:
 
 test: 
 	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_memset_test.c -L. s21_string.a  -o s21_memset_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strncat_test.c -L. s21_string.a  -o s21_strncat_test
 	
 start_tests:
 	./s21_memset_test
+	./s21_strncat_test
 
 gcov_report:
 	lcov -o tests.info -c -d .  
