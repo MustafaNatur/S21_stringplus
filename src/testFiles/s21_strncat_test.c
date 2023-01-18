@@ -13,8 +13,8 @@ START_TEST(test_s21_string_strncat_normal) {
 END_TEST
 
 START_TEST(test_s21_string_strncat_broke) {
-  char str1[10] = "Hello";
-  char str2[10] = "wo\0rld!";
+  char str1[] = "Hello";
+  char str2[] = "wo\0rld!";
   ck_assert_pstr_eq(strncat(str1, str2, 5), s21_strncat(str1, str2, 5));
   ck_assert_pstr_eq(strncat(str2, str1, 3), s21_strncat(str2, str1, 3));
 }
