@@ -1,6 +1,5 @@
 #include <check.h>
-#include <stdlib.h>
-#include <string.h>s
+#include <string.h>
 
 #include "s21_string.h"
 
@@ -23,7 +22,7 @@ END_TEST
 
 Suite *s21_strncmp_suite() {
   Suite *s;
-  TCase *tc_abs_usual, *tc_abs_unusual;
+  TCase *tc_strncmp_usual, *tc_strncmp_unusual;
 
   s = suite_create("s21_strncmp");
 
@@ -32,7 +31,7 @@ Suite *s21_strncmp_suite() {
   suite_add_tcase(s, tc_strncmp_usual);
 
   tc_strncmp_unusual = tcase_create("s21_strncmp_test_usual");
-  tcase_add_test(tc_strncmp_unusual, s21_strncmp_test_usual);
+  tcase_add_test(tc_strncmp_unusual, s21_strncmp_test_unusual);
   suite_add_tcase(s, tc_strncmp_unusual);
 
   return s;
