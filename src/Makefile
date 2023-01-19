@@ -25,27 +25,32 @@ build_library:
 build_test: 
 	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_memset_test.c -L. s21_string.a  -o s21_memset_test
 	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strncat_test.c -L. s21_string.a  -o s21_strncat_test
-		$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strcspn_test.c -L. s21_string.a  -o s21_strcspn_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strcspn_test.c -L. s21_string.a  -o s21_strcspn_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strlen_test.c -L. s21_string.a  -o s21_strlen_test
 
 build_test_sanitizer: 
 	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) -g testFiles/s21_memset_test.c -L. s21_string.a  -o s21_memset_test
 	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) -g testFiles/s21_strncat_test.c -L. s21_string.a  -o s21_strncat_test
 	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) -g testFiles/s21_strcspn_test.c -L. s21_string.a  -o s21_strcspn_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) -g testFiles/s21_strlen_test.c -L. s21_string.a  -o s21_strlen_test
 
 start_tests:
 	./s21_memset_test
 	./s21_strncat_test
 	./s21_strcspn_test
+	./s21_strlen_test
 
 start_leaks_tests: build_object_files build_library build_test 
 	valgrind --leak-check=yes ./s21_memset_test
 	valgrind --leak-check=yes ./s21_strncat_test
 	valgrind --leak-check=yes ./s21_strcspn_test
+	valgrind --leak-check=yes ./s21_strlen_test
 
 start_sanitizer_tests: build_object_files_san build_library build_test_sanitizer 
 	./s21_memset_test
 	./s21_strncat_test
 	./s21_strcspn_test
+	./s21_strlen_test
 	make clean
 
 gcov_report:
