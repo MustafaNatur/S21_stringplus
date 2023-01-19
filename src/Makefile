@@ -11,7 +11,7 @@ SAN=-fsanitize=address
 GCOVFLAGS=-fprofile-arcs -ftest-coverage
 sourceFilesArray=$(ls sourceFiles)
 
-all: build_object_files build_library build_test start_tests clean
+all: build_object_files build_library build_test gen_html clean
 
 build_object_files:
 	$(CC) $(FLAGS) $(GCOVFLAGS) $(GLFLAGS) -c $(FUNC_FILES_C) 
