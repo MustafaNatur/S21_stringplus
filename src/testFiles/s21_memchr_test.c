@@ -1,7 +1,5 @@
 #include "s21_string.h"
 #include <check.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 START_TEST(test_s21_string_memchr_usual) {
