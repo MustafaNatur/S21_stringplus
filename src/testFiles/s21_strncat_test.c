@@ -5,18 +5,21 @@
 #include "../s21_string.h"
 
 START_TEST(test_s21_string_strncat_normal) {
-  char str1[10] = "Hello";
-  char str2[10] = "world!";
+  char str1[25] = "Hello";
+  char str2[25] = "world!";
   ck_assert_pstr_eq(strncat(str1, str2, 5), s21_strncat(str1, str2, 5));
   ck_assert_pstr_eq(strncat(str2, str1, 3), s21_strncat(str2, str1, 3));
 }
 END_TEST
 
 START_TEST(test_s21_string_strncat_broke) {
-  char str1[] = "Hello";
-  char str2[] = "wo\0rld!";
+  char str1[25] = "Hello";
+  char str2[25] = "wo\0rld!";
+  char str3[5] = "\0";
+  char str4[5] = "\0";
   ck_assert_pstr_eq(strncat(str1, str2, 5), s21_strncat(str1, str2, 5));
   ck_assert_pstr_eq(strncat(str2, str1, 3), s21_strncat(str2, str1, 3));
+  ck_assert_pstr_eq(strncat(str3, str4, 3), s21_strncat(str3, str4, 3));
 }
 END_TEST
 

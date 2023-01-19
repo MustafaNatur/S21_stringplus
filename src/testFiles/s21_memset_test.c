@@ -12,7 +12,11 @@ START_TEST(test_s21_string_memset_normal) {
 END_TEST
 
 START_TEST(test_s21_string_memset_broke) {
-  // ck_assert_ptr_null(s21_memset("\0", '$', 6));
+  char str1[30] = "Hello world! Hello School 21!";
+  char str2[1] = "";
+  int ch = '\0';
+  ck_assert_pstr_eq(memset(str1, ch, 1), s21_memset(str1, ch, 1));
+  ck_assert_pstr_eq(memset(str2, ch, 1), s21_memset(str2, ch, 1));
 }
 END_TEST
 

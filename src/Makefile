@@ -13,8 +13,10 @@ sourceFilesArray=$(ls sourceFiles)
 
 all: build_object_files build_library build_test start_tests clean
 
-
 build_object_files:
+	$(CC) $(FLAGS) $(GCOVFLAGS) $(GLFLAGS) -c $(FUNC_FILES_C) 
+
+build_object_files_san:
 	$(CC) $(FLAGS) $(GCOVFLAGS) $(GLFLAGS) $(SAN) -c $(FUNC_FILES_C) 
 
 build_library:
@@ -36,7 +38,7 @@ start_leaks_tests: build_object_files build_library build_test
 	valgrind --leak-check=yes ./s21_memset_test
 	valgrind --leak-check=yes ./s21_strncat_test
 
-start_sanitizer_tests: build_object_files build_library build_test_sanitizer 
+start_sanitizer_tests: build_object_files_san build_library build_test_sanitizer 
 	./s21_memset_test
 	./s21_strncat_test
 	make clean
@@ -51,7 +53,7 @@ gen_html: start_tests gcov_report
 
 
 clean:
-	rm -rf *.o *.gcno *.gcov *.gcda *.a *.info *test
+	rm -rf *.o *.gcno *.gcov *.gcda *.a *.info *test *dSYM
 
 rebuild:
 	make clean
