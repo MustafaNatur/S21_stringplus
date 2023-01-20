@@ -1,4 +1,9 @@
 #!/bin/bash
+# requirements
+# ubuntu 22.04 LTS
+# sudo apt install pkg-config
+# sudo apt install check
+
 FLAGS=-Wall -Wextra -Werror
 CC=gcc
 FUNC_FILES_C=sourceFiles/*.c
