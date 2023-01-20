@@ -1,10 +1,12 @@
-typedef unsigned long long s21_size_t;
-#define s21_NULL ((void *)0)
+#ifndef SRC_SOURCEFILES_S21_STRING_H_
+#define SRC_SOURCEFILES_S21_STRING_H_
 
-// http://microsin.net/programming/arm/void-type-in-c-language.html гайд про
-// void * https://pvs-studio.com/ru/blog/terms/0088/ про терминирующий 0
-// http://natalia.appmat.ru/c&c++/lezione5.php обо всем по чуть-чуть
+typedef unsigned int s21_size_t;
+#include <stdio.h>
 
+char *s21_strrchr(const char *str, int c);
+
+#endif  // SRC_SOURCEFILES_S21_STRING_H_
 void *s21_memcpy(void *dest, const void *src,
                  s21_size_t n);  // Копирует n символов из src в dest.
 void *s21_memmove(void *dest, const void *src,
