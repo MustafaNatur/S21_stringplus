@@ -1,5 +1,6 @@
 #include <check.h>
 #include <string.h>
+
 #include "../sourceFiles/s21_string.h"
 
 char *s21_strrchr(const char *str, int c);
@@ -29,12 +30,6 @@ START_TEST(terminate_null) {
 }
 END_TEST
 
-START_TEST(uninitialized_str) {
-  char *str;
-  ck_assert_ptr_ne(s21_strrchr(str, 's'), strrchr(str, 's'));
-}
-END_TEST
-
 Suite *s21_strrchr_suite() {
   Suite *s;
   TCase *tc_strrchr_normal = tcase_create("strrchr_normal");
@@ -44,7 +39,6 @@ Suite *s21_strrchr_suite() {
   tcase_add_test(tc_strrchr_normal, test_s21_string_strrchr_usual2);
   tcase_add_test(tc_strrchr_normal, empty_str);
   tcase_add_test(tc_strrchr_normal, terminate_null);
-  tcase_add_test(tc_strrchr_normal, uninitialized_str);
   suite_add_tcase(s, tc_strrchr_normal);
   return s;
 }

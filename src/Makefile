@@ -12,7 +12,7 @@ sourceFilesArray=$(ls sourceFiles)
 
 tests: test start_tests
 
-all: build_object_files build_library testmemcpy testmemmove testmemcmp teststrpbrk start_tests gen_html clean
+all: build_object_files build_library test start_tests gen_html clean
 
 main:
 	$(CC) $(FLAGS) testFiles/test.c sourceFiles/s21_strrchr.c
@@ -25,10 +25,11 @@ build_library:
 	ar rcs $(LIBNAME) $(FUNC_FILES_O)
 
 test: 
-	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_test_memchr.c -L. s21_string.a  -o s21_test_memchr
-	
+	$(CC) $(FLAGS) testFiles/s21_test_strrchr.c sourceFiles/s21_strrchr.c -lcheck_pic -pthread -lrt -lm -lsubunit -lgcov -coverage -o testFiles/s21_test_strrchr
 start_tests:
-	./s21_test_memchr
+	cd testFiles; \
+	./s21_test_strrchr; \
+	cd ..
 
 gcov_report:
 	lcov -o tests.info -c -d .  
@@ -45,4 +46,4 @@ clean:
 
 rebuild:
 	make clean
-	make	
+	make

@@ -6,7 +6,6 @@ typedef unsigned int s21_size_t;
 
 char *s21_strrchr(const char *str, int c);
 
-#endif  // SRC_SOURCEFILES_S21_STRING_H_
 void *s21_memcpy(void *dest, const void *src,
                  s21_size_t n);  // Копирует n символов из src в dest.
 void *s21_memmove(void *dest, const void *src,
@@ -18,3 +17,4 @@ char *s21_strpbrk(
     const char *str1,
     const char *str2);  // Находит первый символ в строке str1, который
                         // соответствует любому символу, указанному в str2.
+#endif  // SRC_SOURCEFILES_S21_STRING_H_
