@@ -7,7 +7,7 @@ CHECKFLAGS=$(shell pkg-config --cflags --libs check)
 GCOVFLAGS=-fprofile-arcs -ftest-coverage
 LIBNAME=s21_string.a
 GLFLAGS=--coverage
-SAN=-fsanitize=address
+SAN=-fsanitize=address -g
 GCOVFLAGS=-fprofile-arcs -ftest-coverage
 sourceFilesArray=$(ls sourceFiles)
 
@@ -23,20 +23,23 @@ build_library:
 	ar rcs $(LIBNAME) $(FUNC_FILES_O)
 
 build_test: 
-	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_memset_test.c -L. s21_string.a  -o s21_memset_test
-	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strncat_test.c -L. s21_string.a  -o s21_strncat_test
-	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strcspn_test.c -L. s21_string.a  -o s21_strcspn_test
-	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strlen_test.c -L. s21_string.a  -o s21_strlen_test
-	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strcat_test.c -L. s21_string.a  -o s21_strcat_test
-	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strcmp_test.c -L. s21_string.a  -o s21_strcmp_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_memset_test.c -L. $(LIBNAME)  -o s21_memset_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strncat_test.c -L. $(LIBNAME)  -o s21_strncat_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strcspn_test.c -L. $(LIBNAME)  -o s21_strcspn_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strlen_test.c -L. $(LIBNAME)  -o s21_strlen_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strcat_test.c -L. $(LIBNAME)  -o s21_strcat_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strcmp_test.c -L. $(LIBNAME)  -o s21_strcmp_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strchr_test.c -L. $(LIBNAME)  -o s21_strchr_test
+
 
 build_test_sanitizer: 
-	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) -g testFiles/s21_memset_test.c -L. s21_string.a  -o s21_memset_test
-	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) -g testFiles/s21_strncat_test.c -L. s21_string.a  -o s21_strncat_test
-	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) -g testFiles/s21_strcspn_test.c -L. s21_string.a  -o s21_strcspn_test
-	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) -g testFiles/s21_strlen_test.c -L. s21_string.a  -o s21_strlen_test
-	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) -g testFiles/s21_strcat_test.c -L. s21_string.a  -o s21_strcat_test
-	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) -g testFiles/s21_strcmp_test.c -L. s21_string.a  -o s21_strcmp_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) testFiles/s21_memset_test.c -L. $(LIBNAME)  -o s21_memset_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) testFiles/s21_strncat_test.c -L. $(LIBNAME)  -o s21_strncat_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) testFiles/s21_strcspn_test.c -L. $(LIBNAME)  -o s21_strcspn_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) testFiles/s21_strlen_test.c -L. $(LIBNAME)  -o s21_strlen_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) testFiles/s21_strcat_test.c -L. $(LIBNAME)  -o s21_strcat_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) testFiles/s21_strcmp_test.c -L. $(LIBNAME)  -o s21_strcmp_test
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) $(SAN) testFiles/s21_strchr_test.c -L. $(LIBNAME)  -o s21_strchr_test
 
 start_tests: build_object_files build_library build_test
 	./s21_memset_test
@@ -45,6 +48,7 @@ start_tests: build_object_files build_library build_test
 	./s21_strlen_test
 	./s21_strcat_test
 	./s21_strcmp_test
+	./s21_strchr_test
 
 start_leaks_tests: build_object_files build_library build_test 
 	valgrind --leak-check=yes ./s21_memset_test
@@ -53,6 +57,7 @@ start_leaks_tests: build_object_files build_library build_test
 	valgrind --leak-check=yes ./s21_strlen_test
 	valgrind --leak-check=yes ./s21_strcat_test
 	valgrind --leak-check=yes ./s21_strcmp_test
+	valgrind --leak-check=yes ./s21_strchr_test
 
 start_sanitizer_tests: build_object_files_san build_library build_test_sanitizer 
 	./s21_memset_test
@@ -61,6 +66,7 @@ start_sanitizer_tests: build_object_files_san build_library build_test_sanitizer
 	./s21_strlen_test
 	./s21_strcat_test
 	./s21_strcmp_test
+	./s21_strchr_test
 	make clean
 
 gcov_report:
