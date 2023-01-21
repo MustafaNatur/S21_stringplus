@@ -3,7 +3,6 @@
 # ubuntu 22.04 LTS
 # sudo apt install pkg-config
 # sudo apt install check
-
 FLAGS=-Wall -Wextra -Werror
 CC=gcc
 FUNC_FILES_C=sourceFiles/*.c
@@ -14,14 +13,11 @@ LIBNAME=s21_string.a
 GLFLAGS=--coverage
 GCOVFLAGS=-fprofile-arcs -ftest-coverage
 sourceFilesArray=$(ls sourceFiles)
-
-tests: test start_tests
-
-all: build_object_files build_library test start_tests gen_html clean
-
-main:
-	$(CC) $(FLAGS) testFiles/test.c sourceFiles/s21_strrchr.c
-	./a.out
+TST_LIBS?=-lcheck
+ifeq ($(shell uname), Linux)
+TST_LIBS=-lcheck_pic $(shell pkg-config --libs check) -lpthread -lrt -lm
+endif
+all: build_object_files build_library testmemcpy testmemmove testmemcmp teststrpbrk teststrrchr teststrspn start_tests gen_html clean
 
 build_object_files:
 	$(CC) $(FLAGS) $(GCOVFLAGS) $(GLFLAGS) -c $(FUNC_FILES_C) 
@@ -29,12 +25,31 @@ build_object_files:
 build_library:
 	ar rcs $(LIBNAME) $(FUNC_FILES_O)
 
-test: 
-	$(CC) $(FLAGS) testFiles/s21_test_strrchr.c sourceFiles/s21_strrchr.c -lcheck_pic -pthread -lrt -lm -lsubunit -lgcov -coverage -o testFiles/s21_test_strrchr
+testmemcpy:
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_memcpy_test.c -o s21_test_memcpy $(TST_LIBS) -L. s21_string.a
+	
+testmemmove:
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_memmove_test.c -o s21_test_memmove $(TST_LIBS) -L. s21_string.a
+	
+testmemcmp:
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_memcmp_test.c  -o s21_test_memcmp $(TST_LIBS) -L. s21_string.a 
+	
+teststrpbrk:
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strpbrk_test.c  -o s21_test_strpbrk $(TST_LIBS) -L. s21_string.a 
+
+teststrrchr:
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strrchr_test.c  -o s21_test_strrchr $(TST_LIBS) -L. s21_string.a 
+
+teststrspn:
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strspn_test.c  -o s21_test_strspn $(TST_LIBS) -L. s21_string.a 
+
 start_tests:
-	cd testFiles; \
-	./s21_test_strrchr; \
-	cd ..
+	./s21_test_memcpy
+	./s21_test_memmove
+	./s21_test_memcmp
+	./s21_test_strpbrk
+	#./s21_test_strrchr
+	./s21_test_strspn
 
 gcov_report:
 	lcov -o tests.info -c -d .  
@@ -45,10 +60,8 @@ gcov_report:
 gen_html: start_tests gcov_report
 	
 clean:
-	rm -rf *.o *.gcno *.gcov *.gcda *.a *.info s21* a.out
-	cd testFiles; \
-	rm -rf *.o *.gcno *.gcov *.gcda *.a *.info a.out
+	rm -rf *.o *.gcno *.gcov *.gcda *.a *.info s21*
 
 rebuild:
 	make clean
-	make
+	make	

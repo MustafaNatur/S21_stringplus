@@ -18,4 +18,10 @@ char *s21_strpbrk(
     const char *str1,
     const char *str2);  // Находит первый символ в строке str1, который
                         // соответствует любому символу, указанному в str2.
+
+s21_size_t s21_strspn(
+    const char *str1,
+    const char *str2);  //Вычисляет длину начального сегмента str1,
+                        //который полностью состоит из символов str2.
+
 #endif  // SRC_SOURCEFILES_S21_STRING_H_

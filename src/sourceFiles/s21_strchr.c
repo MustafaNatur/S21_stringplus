@@ -1,4 +1,4 @@
-#include "string.h"
+#include "s21_string.h"
 
 char *s21_strchr(const char *str, int symbol) {
   for (; *str != '\0'; ++str)
