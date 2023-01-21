@@ -7,26 +7,50 @@ char *s21_strrchr(const char *str, int c);
 
 START_TEST(test_s21_string_strrchr_usual1) {
   char *str = "abobus";
-  ck_assert_ptr_eq(s21_strrchr(str, 's'), strrchr(str, 's'));
+  ck_assert_pstr_eq(s21_strrchr(str, 's'), strrchr(str, 's'));
 }
 END_TEST
 
 START_TEST(test_s21_string_strrchr_usual2) {
   char *str =
       "ffffffffffffffffffffffffffffffffffffffffffffssssssssssssssssssss";
-  ck_assert_ptr_eq(s21_strrchr(str, 's'), strrchr(str, 's'));
+  ck_assert_pstr_eq(s21_strrchr(str, 's'), strrchr(str, 's'));
+}
+END_TEST
+
+START_TEST(z_line) {
+  char str[6];
+  str[0] = 65;
+  str[1] = 66;
+  str[2] = 79;
+  str[3] = 66;
+  str[4] = 85;
+  str[5] = 83;
+  ck_assert_pstr_eq(s21_strrchr(str, '\0'), strrchr(str, '\0'));
+}
+END_TEST
+
+START_TEST(z_line_terminate_null) {
+  char str[6];
+  str[0] = 65;
+  str[1] = 66;
+  str[2] = 79;
+  str[3] = 66;
+  str[4] = 85;
+  str[5] = 83;
+  ck_assert_pstr_eq(s21_strrchr(str, '\0'), strrchr(str, '\0'));
 }
 END_TEST
 
 START_TEST(empty_str) {
   char *str = "";
-  ck_assert_ptr_eq(s21_strrchr(str, 's'), strrchr(str, 's'));
+  ck_assert_pstr_eq(s21_strrchr(str, 's'), strrchr(str, 's'));
 }
 END_TEST
 
 START_TEST(terminate_null) {
   char *str = '\0';
-  ck_assert_ptr_eq(s21_strrchr(str, '\0'), strrchr(str, '\0'));
+  ck_assert_pstr_eq(s21_strrchr(str, '\0'), strrchr(str, '\0'));
 }
 END_TEST
 
@@ -37,6 +61,8 @@ Suite *s21_strrchr_suite() {
   s = suite_create("strrchr");
   tcase_add_test(tc_strrchr_normal, test_s21_string_strrchr_usual1);
   tcase_add_test(tc_strrchr_normal, test_s21_string_strrchr_usual2);
+  tcase_add_test(tc_strrchr_normal, z_line);
+  tcase_add_test(tc_strrchr_normal, z_line_terminate_null);
   tcase_add_test(tc_strrchr_normal, empty_str);
   tcase_add_test(tc_strrchr_normal, terminate_null);
   suite_add_tcase(s, tc_strrchr_normal);
