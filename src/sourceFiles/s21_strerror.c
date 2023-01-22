@@ -1,7 +1,8 @@
 #include "s21_string.h"
-
+#include <string.h>
 #ifdef __linux__
 #define MAX 133
+#define FORMAT "Unknown error %d"
 char *s21_err[] = {"Success",
                    "Operation not permitted",
                    "No such file or directory",
@@ -138,7 +139,9 @@ char *s21_err[] = {"Success",
                    "Memory page has hardware error"};
 #elif __APPLE__
 #define MAX 106
-char *s21_err[] = {"Operation not permitted",
+#define FORMAT "Unknown error: %d"
+char *s21_err[] = {"Undefined error: 0",
+                   "Operation not permitted",
                    "No such file or directory",
                    "No such process",
                    "Interrupted system call",
@@ -247,5 +250,13 @@ char *s21_err[] = {"Operation not permitted",
 #endif
 
 char *s21_strerror(int errnum) {
-  return errnum <= MAX && errnum >= 0 ? s21_err[errnum] : "Unknown error: 107"
+  char *ans;
+  char buff[256];
+  if (errnum <= MAX && errnum >= 0) {
+    ans = s21_err[errnum];
+  } else {
+    sprintf(buff, FORMAT, errnum); // заменить на нашу реализацию
+    ans = buff;
+  }
+  return ans;
 }
