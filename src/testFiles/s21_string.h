@@ -12,3 +12,5 @@ typedef unsigned long long s21_size_t;
 void *s21_memchr(const void *str, int c, s21_size_t n);
 char *s21_strerror(int errnum);
 char *s21_strcpy(char *dest, const char *src);
+char *s21_strstr(const char *haystack, const char *needle);
+char *s21_strtok(char *str, const char *delim);
