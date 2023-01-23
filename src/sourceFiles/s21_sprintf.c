@@ -26,7 +26,6 @@ void *get_opt(const char *format, flag *flags) {
 char *get_flags(const char *format, flag *flags) {
   char *ptr = (char *)format;
   while (*ptr == '+' || *ptr == '-') {
-    ptr++;
     switch (*ptr) {
       case '+':
         flags->plus = 1;
@@ -35,7 +34,9 @@ char *get_flags(const char *format, flag *flags) {
         flags->minus = 1;
         break;
     }
+    ptr++;
   }
+  return *ptr;
 }
 
 char *get_width(const char *format, flag *flags) {
