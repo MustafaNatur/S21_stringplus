@@ -1,5 +1,9 @@
+#include <math.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "sourceFiles/s21_sprintf.h"
 
 typedef unsigned long long s21_size_t;
 #define s21_NULL ((void *)0)
@@ -28,3 +32,5 @@ char *s21_strrchr(const char *str, int c);
 s21_size_t s21_strspn(const char *str1, const char *str2);
 char *s21_strstr(const char *haystack, const char *needle);
 char *s21_strtok(char *str, const char *delim);
+
+int s21_sprintf(char *str, const char *format, ...);
