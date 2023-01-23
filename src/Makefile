@@ -13,6 +13,9 @@ sourceFilesArray=$(ls sourceFiles)
 
 all: build_object_files build_library build_test start_tests gen_html
 
+style: 
+	clang-format -n sourceFiles/*.c 
+	clang-format -n testFiles/*.c 
 
 
 build_object_files:
@@ -32,7 +35,6 @@ build_test_sanitizer:
 	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(SAN) $(GCOVFLAGS) testFiles/s21_memchr_test.c -L. s21_string.a  -o s21_memchr_test
 	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(SAN) $(GCOVFLAGS) testFiles/s21_strerror_test.c -L. s21_string.a  -o s21_strerror_test
 	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(SAN) $(GCOVFLAGS) testFiles/s21_strcpy_test.c -L. s21_string.a  -o s21_strcpy_test
-
 
 
 start_tests:
