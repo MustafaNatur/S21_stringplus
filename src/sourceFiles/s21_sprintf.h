@@ -1,3 +1,4 @@
+
 typedef struct flags {
   char plus;
   char minus;
@@ -21,7 +22,9 @@ typedef struct flags {
   char u;  // Беззнаковое десятичное целое число
 } flag;
 
-char *get_opt(char *format, flag *flags);
-char *get_flags(char *format, flag *flags);
-char *get_width(char *format, flag *flags);
+void *get_opt(const char *format, flag *flags);
+char *get_flags(const char *format, flag *flags);
+char *get_width(const char *format, flag *flags);
 int s21_atoi(char *str);
+char *get_prec(const char *format, flag *flags);
+char *get_length(const char *format, flag *flags);
