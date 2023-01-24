@@ -69,6 +69,16 @@ str[5] = 83;
 
 char *sym = "abobus";
 ck_assert_int_eq(s21_strspn(str, sym), strspn(str, sym));
+
+}
+END_TEST
+
+START_TEST(s21_test_strspn_unusual3)
+{
+char * str = "";
+char * sym = "";
+
+ck_assert_int_eq(s21_strspn(str, sym), strspn(str, sym));
 }
 END_TEST
 
@@ -86,6 +96,7 @@ int main(void)
     tcase_add_test(tc1_1, s21_test_strspn_usual4);
     tcase_add_test(tc1_1, s21_test_strspn_unusual1);
     tcase_add_test(tc1_1, s21_test_strspn_unusual2);
+    tcase_add_test(tc1_1, s21_test_strspn_unusual3);
 
     srunner_run_all(sr, CK_ENV);
     nf = srunner_ntests_failed(sr);
