@@ -17,7 +17,7 @@ style:
 	clang-format -n sourceFiles/*.c testFiles/*.c 
 
 build_object_files:
-	$(CC) $(FLAGS) $(GCOVFLAGS) $(GLFLAGS) $(SAN) -c $(FUNC_FILES_C) 
+	$(CC) $(FLAGS) $(GCOVFLAGS) $(GLFLAGS) -c $(FUNC_FILES_C) 
 
 build_library:
 	ar rcs $(LIBNAME) $(FUNC_FILES_O)
@@ -27,8 +27,7 @@ build_test:
 	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strerror_test.c -L. s21_string.a  -o s21_strerror_test
 	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strcpy_test.c -L. s21_string.a  -o s21_strcpy_test
 	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strstr_test.c -L. s21_string.a  -o s21_strstr_test
-
-
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(GCOVFLAGS) testFiles/s21_strtok_test.c -L. s21_string.a  -o s21_strtok_test
 
 
 build_test_sanitizer: 
@@ -36,14 +35,14 @@ build_test_sanitizer:
 	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(SAN) $(GCOVFLAGS) testFiles/s21_strerror_test.c -L. s21_string.a  -o s21_strerror_test
 	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(SAN) $(GCOVFLAGS) testFiles/s21_strcpy_test.c -L. s21_string.a  -o s21_strcpy_test
 	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(SAN) $(GCOVFLAGS) testFiles/s21_strstr_test.c -L. s21_string.a  -o s21_strstr_test
-
-
+	$(CC) $(CHECKFLAGS) $(GLFLAGS) $(SAN) $(GCOVFLAGS) testFiles/s21_strtok_test.c -L. s21_string.a  -o s21_strtok_test
 
 start_tests:
 	./s21_memchr_test
 	./s21_strerror_test
 	./s21_strcpy_test
 	./s21_strstr_test
+	./s21_strtok_test
 	
 
 start_leaks_tests: build_object_files build_library build_test 
@@ -55,6 +54,9 @@ start_leaks_tests: build_object_files build_library build_test
 start_sanitizer_tests: build_object_files build_library build_test_sanitizer 
 	./s21_memchr_test
 	./s21_strerror_test
+	./s21_strcpy_test
+	./s21_strstr_test
+	./s21_strtok_test
 	make clean
 
 
@@ -67,7 +69,6 @@ gcov_report:
 
 gen_html: gcov_report
 	
-
 
 clean:
 	rm -rf *.o *.gcno *.gcov *.gcda *.a *.info s21*
